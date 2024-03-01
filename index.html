@@ -30,20 +30,30 @@
         import { renderProducts, getByCategory, getByRating } from './src/data-controller.ts';
         renderProducts(products);
 
-        
-        // Bind click events using .addEventListener to the navigation links. Upon clicking:
+        let currentFilter = '';
 
-        // - "Electronics" should display all products categorized as "Electronics."
-        // - "Clothing" should display all products categorized as "Clothing."
-        // - "Groceries" should display all products categorized as "Groceries."
-        // - "Best Seller" should display all products with a rating greater than 4.5.
+          function applyFilter(filter) {
+            if (currentFilter === filter) {
+              // If the filter is clicked again show all the products
+              renderProducts(products);
+              currentFilter = ''; // Reset the current filter
+            } else {
+              // Apply the new filter
+              if (filter === 'Best Seller') {
+                getByRating(4.5);
+              } else {
+                getByCategory(filter);
+              }
+              currentFilter = filter; // Update the current filter
+            }
+          }
 
         
-        //event listeners for links
-        document.getElementById('electronics').addEventListener('click', () => getByCategory('Electronics')); 
-        document.getElementById('clothing').addEventListener('click', () => getByCategory('Clothing'));
-        document.getElementById('groceries').addEventListener('click', () => getByCategory('Groceries'));
-        document.getElementById('bestSeller').addEventListener('click', () => getByRating(4.5));
+        //event listeners for links with filters added
+        document.getElementById('electronics').addEventListener('click', () => applyFilter('Electronics'));
+        document.getElementById('clothing').addEventListener('click', () => applyFilter('Clothing'));
+        document.getElementById('groceries').addEventListener('click', () => applyFilter('Groceries'));
+        document.getElementById('bestSeller').addEventListener('click', () => applyFilter('Best Seller'));
       </script>
     </main>
     <footer>
